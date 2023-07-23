@@ -1,29 +1,41 @@
 #include<stdio.h>
-void stateUpgrade(int *state,char check,char condition){
-    if(check == condition)state++;
+void stateUpgrade(char *state,char check,char update_x,char update_y){
+    if(check == '0')*(state) = update_x;
+    else *(state) = update_y;
 }
 int main(){
-    char str[100],steps[100],condition[100];
-    printf("Enter string to check: ");
+    char str[100],condition[100],states[100][2];
+    int c_size;
+    printf("Enter the string: ");
     scanf("%s",str);
-    printf("Enter condition: ");
-    scanf("%s",condition);
-    int i;
-    int count = 0;
-    for(i=0; condition[i]; i++)count++;
-    int totalState = count + 1;
-    int state = 1;
-    int j = 0;
-    for(i=0; str[i]; i++){
-        stateUpgrade(&state,str[i],condition[j]);
+    printf("Enter the size of your condition: ");
+    scanf("%d",&c_size);
+    getchar();
+    // printf("Enter the condition: ");
+    // scanf("%s",condition);
+    // getchar();
+    printf("Enter the transition table: \n");
+    for(int i=0; i<=c_size; i++){
+        printf("For: %c\n",'A'+i);
+        printf("If the input is 0: ");
+        scanf("%c",&states[i][0]);
+        getchar();
+        printf("If the input is 1: ");
+        scanf("%c",&states[i][1]);
+        getchar();
     }
-
-
-
-    if(state=='C')printf("String accepted\n");
-    else printf("String not accepted\n");
-    printf("Steps are: ");
-    for(i=0; steps[i]; i++)printf("%c ",steps[i]);
+    char current_states = 'A';
+    char list[100];
+    int i;
+    for(i=0; str[i]; i++){
+        list[i] = current_states;
+        stateUpgrade(&current_states,str[i],states[current_states-'A'][0],states[current_states-'A'][1]);
+    }
+    list[i] = current_states;
+    if(current_states == 'A'+ c_size)printf("Accepted\n");
+    else printf("Not Accepted\n");
+    printf("States: ");
+    for(i=0; list[i]; i++)printf("%c ",list[i]);
     printf("\n");
     return 0;
 };
