@@ -2,29 +2,35 @@
 #include<stdbool.h>
 #include<string.h>
 bool result = false;
-void stateUpgrade(int num_states,int num_symbol,char *setofstate,char *alphabet,char initialstate,char finalstate,char *inputstring,char transition[num_states][num_symbol][10],int num_transition[num_states][num_symbol],int index){
-    printf("%c\n",initialstate);
-    if(inputstring[index]!='\0' && initialstate==finalstate)return;
-    if(inputstring[index]=='\0'){
-        if(initialstate==finalstate){
-            result = true;
-            return;
-        }
-        else{
-            result = false;
-            return;
-        }
+char input_string[100];
+int len;
+int p = 0;
+int store[100];
+char looping;
+void stateUpgrade(int num_states,int num_symbol,char *setofstate,char *alphabet,char initialstate,char finalstate,char transition[num_states][num_symbol][10],int num_transition[num_states][num_symbol],int index){
+    if(index==len && initialstate == finalstate){
+        result = true;
+        store[p++] = initialstate;
+        for(int j=0; j<p; j++)printf("%c ",store[j]);
+        printf("\n");
+        return;
     }
+    if(index==len && initialstate != finalstate){
+        looping = initialstate;
+        return;
+    }
+    int i;
+    for(i=0; i<num_symbol; i++){
+        if(alphabet[i]==input_string[index])break;
+    }
+    if(num_transition[initialstate-'a'][i]==0)return;
     int k=0;
     char res;
-    while(k<num_transition[initialstate-'a'][inputstring[index]-'0']){
-        if(transition[initialstate-'a'][inputstring[index]-'0'][k]!='*'){
-            stateUpgrade(num_states,num_symbol,setofstate,alphabet,transition[initialstate-'a'][inputstring[index]-'0'][k],finalstate,inputstring,transition,num_transition,index+1);
-        }
+    while(k<num_transition[initialstate-'a'][i] && !result){
+        store[p++] = initialstate;
+        stateUpgrade(num_states,num_symbol,setofstate,alphabet,transition[initialstate-'a'][i][k],finalstate,transition,num_transition,index+1);
         k++;
     }
-    if(initialstate == finalstate)result = true;
-    else result = false;
     return;
 }
 int main(){
@@ -36,7 +42,7 @@ int main(){
     printf("Enter the number of final state: ");
     scanf("%d",&num_final);
     getchar();
-    char set_of_state[num_states],alphabet[num_symbol],initial_state,final_states[num_final],transition_table[num_states][num_symbol][10],input_string[100],steps[100];
+    char set_of_state[num_states],alphabet[num_symbol],initial_state,final_states[num_final],transition_table[num_states][num_symbol][10],steps[100];
     for(int i=0; i<num_states; i++){
         printf("Enter %dth state: ",i+1);
         scanf("%c",&set_of_state[i]);
@@ -79,8 +85,9 @@ int main(){
     }
     printf("Enter the string: ");
     scanf("%s",input_string);
-    stateUpgrade(num_states,num_symbol,set_of_state,alphabet,initial_state,final_states[0],input_string,transition_table,num_transition,0);
-    if(!result)printf("Not\n");
-    else printf("Yes\n");
+    len = strlen(input_string);
+    stateUpgrade(num_states,num_symbol,set_of_state,alphabet,initial_state,final_states[0],transition_table,num_transition,0);
+    if(result)printf("Accepted\n");
+    else printf("Rejected because looping in %c\n",looping);
     return 0;
 }
