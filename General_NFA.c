@@ -16,6 +16,7 @@ void stateUpgrade(int num_states,int num_symbol,char *setofstate,char *alphabet,
         return;
     }
     if(index==len && initialstate != finalstate){
+        p--;
         looping = initialstate;
         return;
     }
@@ -25,9 +26,8 @@ void stateUpgrade(int num_states,int num_symbol,char *setofstate,char *alphabet,
     }
     if(num_transition[initialstate-'a'][i]==0)return;
     int k=0;
-    char res;
+    store[p++] = initialstate;
     while(k<num_transition[initialstate-'a'][i] && !result){
-        store[p++] = initialstate;
         stateUpgrade(num_states,num_symbol,setofstate,alphabet,transition[initialstate-'a'][i][k],finalstate,transition,num_transition,index+1);
         k++;
     }
