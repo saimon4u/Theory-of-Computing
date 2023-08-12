@@ -17,6 +17,29 @@ void printTable(vector <vector <vector <int> > > &transition){
         cout << endl;
     }
 }
+void printNewTable(vector <vector <vector <int> > > &transition,vector <vector <int> > &newstate){
+    int c = 0;
+    for(auto t: transition){
+        cout << "{";
+        for(int i=0; i<newstate[c].size(); i++){
+            cout << newstate[c][i];
+            if(i!=newstate[c].size()-1)cout << ",";
+        }
+        cout << "}->";
+        for(auto d: t){
+            if(d.size()==0){
+                cout << "$   ";
+                continue;
+            }
+            for(auto o: d){
+                cout << o;
+            }
+            cout << "  ";
+        }
+        cout << endl;
+        c++;
+    }
+}
 void subsets(vector<int>& A, vector<vector<int> >& res,vector<int>& subset, int index){
 	res.push_back(subset);
 	for (int i = index; i < A.size(); i++) {
@@ -33,7 +56,7 @@ int main(){
 
 // this freopen reads input from a file called nfa.txt
 
-    freopen("nfa.txt","r",stdin);
+    freopen("new.txt","r",stdin);
     int num_states,num_symbol,num_final,temp;
     // printf("Enter the number of states: ");
     cin >> num_states;
@@ -138,7 +161,7 @@ int main(){
         newIndiState.clear();
     }
     cout <<"This is the new subset transition table: " << endl << endl;;
-    printTable(newTable);
+    printNewTable(newTable,newstate);
     cout << endl;
 
 
