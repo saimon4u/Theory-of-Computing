@@ -193,6 +193,32 @@ then the result will be the same but this will be hard to understand */
         res.clear();
         track.pop();
     }
+
+
+
+    //This section iterate through the vector and find all the states and start and final states of our DFA and print them
+
+
+    set<int> states_dfa;
+    int start,end;
+    for(int i=0; i<table.size(); i++){
+        if(i==0)start = table[i].first;
+        else if(i==table.size()-1)end = table[i].first;
+        for(auto v: table[i].second){
+            states_dfa.insert(v);
+        }
+    }
+    cout << "All the states of DFA: " << endl << endl;
+    for(auto s: states_dfa){
+        cout << s << " ";
+    }
+    cout << endl << endl;
+    cout << "Start states of DFA: " << start << endl << endl;
+    cout << "Final states of DFA: " << end << endl << endl;
+
+
+    // This part of the code print the Transition table of our DFA
+
     cout << "This is our desired DFA table: " << endl << endl;
     for(auto it: table){
         cout << it.first << "  -> ";
@@ -201,5 +227,7 @@ then the result will be the same but this will be hard to understand */
         }
         cout << endl;
     }
+
+
     return 0;
 }

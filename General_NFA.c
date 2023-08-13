@@ -17,7 +17,6 @@ void stateUpgrade(int num_states,int num_symbol,char *setofstate,char *alphabet,
     }
     if(index==len && initialstate != finalstate){
         p--;
-        looping = initialstate;
         return;
     }
     int i;
@@ -88,6 +87,6 @@ int main(){
     len = strlen(input_string);
     stateUpgrade(num_states,num_symbol,set_of_state,alphabet,initial_state,final_states[0],transition_table,num_transition,0);
     if(result)printf("Accepted\n");
-    else printf("Rejected because looping in %c\n",looping);
+    else printf("Rejected\n");
     return 0;
 }
