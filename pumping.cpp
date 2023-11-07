@@ -46,6 +46,7 @@ int multiplier(string str){
 int main(){
     srand(time(0));
     string lemma; 
+    cout << "Enter the lemma: ";
     getline(cin,lemma);
     string a = "",b = "";
     int i;

@@ -80,7 +80,7 @@ int main(){
     }
     string present = "S";
     generateLeftDerivation(0,present);
-    generateRightDerivation(present);
+    // generateRightDerivation(present);
     if(leftD[leftD.size()-1] != str){
         cout << "Not in the grammer !" << endl;
         return 0;
@@ -92,11 +92,11 @@ int main(){
         cout << " => " << leftD[i];
     }
     cout << endl << endl;
-    cout << "Right Derivation : ";
-    cout << rightD[0];
-    for(int i=1; i<rightD.size(); i++){
-        cout << " => " << rightD[i];
-    }
-    cout << endl << endl;
-    return 0;
+    // cout << "Right Derivation : ";
+    // cout << rightD[0];
+    // for(int i=1; i<rightD.size(); i++){
+    //     cout << " => " << rightD[i];
+    // }
+    // cout << endl << endl;
+    // return 0;
 }
